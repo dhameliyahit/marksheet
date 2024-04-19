@@ -1,0 +1,163 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+    <style>
+        /* CSS for student market style table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+thead {
+    background-color: #f7df1e; /* Yellow */
+    color: #333; /* Dark Gray */
+}
+
+th, td {
+    border: 2px solid black;
+    padding: 10px;
+    text-align: center;
+}
+tbody {
+    background-color: #fff; /* White */
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Light Gray */
+}
+
+tr:hover {
+    background-color: #ddd; /* Gray on hover */
+}
+
+    </style>
+</head>
+<body>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+<script>
+  var ExcelToJSON = function() {
+
+    this.parseExcel = function(file) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+        var data = e.target.result;
+        var workbook = XLSX.read(data, {
+            type: 'binary'
+        });
+        workbook.SheetNames.forEach(function(sheetName) {
+          // Here is your object
+          var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+          var json_object = JSON.stringify(XL_row_object);
+          
+          json_parse=JSON.parse(json_object);
+          console.log(json_parse);
+
+        //   define all cloummn
+        var data=document.querySelector('#data');
+        let name=document.querySelector('#name');
+        let age=document.querySelector('#age');
+        let sub1=document.querySelector('#sub1');
+        let sub2=document.querySelector('#sub2');
+        let row=document.querySelector('#row');
+        let total=document.querySelector('#total');
+        let pr=document.querySelector('#pr')
+        for (let i = 0; i < json_parse.length; i++) {
+            // name.innerHTML+=`${json_parse[i].Name}<br>`;
+            // age.innerHTML+=`${json_parse[i].age}<br>`;
+            // sub1.innerHTML+=`${json_parse[i].Subject1}<br>`;
+            // sub2.innerHTML+=`${json_parse[i].Subject2}<br>`;
+            // sub3.innerHTML+=`${json_parse[i].Subject3}<br>`;
+           let sub1=Number(json_parse[i].Subject1);
+           let sub2=Number(json_parse[i].Subject2);
+           let sub3=Number(json_parse[i].Subject3);
+            
+           total=sub1+sub2+sub3;
+           pr=total/3;
+           pr=pr.toFixed(2);
+            
+            
+
+            data.innerHTML+=`<tr id="row" style="border: 2px solid">
+                <td id="name">${json_parse[i].Name}</td>
+                <td id="age">${json_parse[i].age}</td>
+                <td id="sub1">${json_parse[i].Subject1}</td>
+                <td id="sub2">${json_parse[i].Subject2}</td>
+                <td id="sub3">${json_parse[i].Subject3}</td>
+                <td id="total">${total}</td>
+                <td id="pr">${pr}%</td>
+                </tr>`
+         
+          }
+
+          
+          jQuery('#xlx_json').val(json_object);
+        })
+      };
+
+      reader.onerror = function(ex) {
+          console.log(ex);
+        };
+
+      reader.readAsBinaryString(file);
+    };
+  };
+
+  function handleFileSelect(evt) {
+      
+      var files = evt.target.files; // FileList object
+    var xl2json = new ExcelToJSON();
+    xl2json.parseExcel(files[0]);
+  }
+</script>
+
+<form enctype="multipart/form-data">
+    <input id="upload" type=file name="files[]">
+    
+    <h1 style="text-align: center;">Marksheet</h1>
+    
+</form>
+
+<!-- <textarea style="display: block; margin-left: auto; margin-right: auto;" class="form-control" rows=35 cols=120 id="xlx_json"> -->
+    <table style="border: 2px solid black; padding: 5px;">
+        <thead>
+            <tr>
+                <th style="border: 2px solid black;">Name</th>
+                <th style="border: 2px solid black;">Age</th>
+                <th style="border: 2px solid black;">Subject1</th>
+                <th style="border: 2px solid black;">Subject2</th>
+                <th style="border: 2px solid black;">Subject3</th>
+                <th style="border: 2px solid black;">Total</th>
+                <th style="border: 2px solid black;">Percentage</th>
+            </tr>
+        </thead>
+        <tbody id="data">
+            
+            <!-- <tr id="row" style="border: 2px solid">
+                <td id="name"></td>
+                <td id="age"></td>
+                <td id="sub1"></td>
+                <td id="sub2"></td>
+                <td id="sub3"></td>
+                <td id="total"></td>
+                <td id="pr"></td>
+            </tr>                 -->
+        </tbody>
+    </table>
+    
+    
+    
+
+<!-- </textarea> -->
+
+<script>
+  document.getElementById('upload').addEventListener('change', handleFileSelect, false);
+</script>
+</body>
+</html>
