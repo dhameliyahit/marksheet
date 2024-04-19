@@ -62,36 +62,48 @@ tr:hover {
         //   define all cloummn
         var data=document.querySelector('#data');
         let name=document.querySelector('#name');
-        let age=document.querySelector('#age');
-        let sub1=document.querySelector('#sub1');
-        let sub2=document.querySelector('#sub2');
-        let row=document.querySelector('#row');
+        let sn=document.querySelector('#sn');
+        let math=document.querySelector('#math');
+        let Gujarati=document.querySelector('#guj');
+        let English=document.querySelector('#eng')
+        let aspas=document.querySelector('#aspas');
+        let hindi=document.querySelector('#hindi');
         let total=document.querySelector('#total');
         let pr=document.querySelector('#pr')
+        let grade=document.querySelector('#grade');
         for (let i = 0; i < json_parse.length; i++) {
             // name.innerHTML+=`${json_parse[i].Name}<br>`;
             // age.innerHTML+=`${json_parse[i].age}<br>`;
             // sub1.innerHTML+=`${json_parse[i].Subject1}<br>`;
             // sub2.innerHTML+=`${json_parse[i].Subject2}<br>`;
             // sub3.innerHTML+=`${json_parse[i].Subject3}<br>`;
-           let sub1=Number(json_parse[i].Subject1);
-           let sub2=Number(json_parse[i].Subject2);
-           let sub3=Number(json_parse[i].Subject3);
+            // conver into integer..................................
+            let math=Number(json_parse[i].math);
+           let guj=Number(json_parse[i].Gujarati);
+           let eng=Number(json_parse[i].english);
+           let aspas=Number(json_parse[i].aspas);
+           let hindi=Number(json_parse[i].hindi);
+           // end of interger............................................
+
             
-           total=sub1+sub2+sub3;
-           pr=total/3;
+           total=math+guj+eng+aspas+hindi;
+           pr=total/5;
            pr=pr.toFixed(2);
             
             
 
             data.innerHTML+=`<tr id="row" style="border: 2px solid">
                 <td id="name">${json_parse[i].Name}</td>
-                <td id="age">${json_parse[i].age}</td>
-                <td id="sub1">${json_parse[i].Subject1}</td>
-                <td id="sub2">${json_parse[i].Subject2}</td>
-                <td id="sub3">${json_parse[i].Subject3}</td>
-                <td id="total">${total}</td>
+                <td id="sn">${json_parse[i].SN}</td>
+                <td id="math">${json_parse[i].math}/60</td>
+                <td id="guj">${json_parse[i].Gujarati}/60</td>
+                <td id="eng">${json_parse[i].english}/60</td>
+                <td id="aspas">${json_parse[i].aspas}/60</td>
+                <td id="hindi">${json_parse[i].hindi}/60</td>
+                <td id="total">${total}/300</td>
                 <td id="pr">${pr}%</td>
+                <td id="grade">${json_parse[i].Grade}</td>
+
                 </tr>`
          
           }
@@ -129,12 +141,15 @@ tr:hover {
         <thead>
             <tr>
                 <th style="border: 2px solid black;">Name</th>
-                <th style="border: 2px solid black;">Age</th>
-                <th style="border: 2px solid black;">Subject1</th>
-                <th style="border: 2px solid black;">Subject2</th>
-                <th style="border: 2px solid black;">Subject3</th>
+                <th style="border: 2px solid black;">S.N</th>
+                <th style="border: 2px solid black;">Math</th>
+                <th style="border: 2px solid black;">Gujarati</th>
+                <th style="border: 2px solid black;">English</th>
+                <th style="border: 2px solid black;">Aspas</th>
+                <th style="border: 2px solid black;">Hindi</th>
                 <th style="border: 2px solid black;">Total</th>
                 <th style="border: 2px solid black;">Percentage</th>
+                <th style="border: 2px solid black;">Grade</th>
             </tr>
         </thead>
         <tbody id="data">
